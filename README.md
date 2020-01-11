@@ -3,8 +3,6 @@
 ## Cross validation
 Technique to evaluate a model by partitioning the original data into a training set and a validation set. A commonly used kind of cross validation is the <strong>k-fold cross validation</strong>. In this specific setting, original data is divides into k-folds, training model on the k-1folds and testing on the kth fold. This results in k different models, which is averaged to get an overall model performance.
 
-![img](../assets/k-fold-cv.png)
-
 Source: 
 - https://github.com/ShuaiW/data-science-question-answer
 
