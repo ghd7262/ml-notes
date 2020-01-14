@@ -110,8 +110,101 @@ Source:
 
 <a href="#top">Back to top</a>
 
+## Decision Tree
+Consists of <strong>root node</strong>, <strong>internal node</strong> and <strong>leaf node</strong>.
+
+Feature is <strong>Impure</strong> when none of the leaf nodes are able to predict 100% of a given outcome (i.e. 100% Yes, heart disease). <strong>Impurity</strong> is a way to measure which separation is the best. <strong>Gini</strong> is the most commonly used one.
+
+<strong>Categorical features</strong>
+
+1: Calculate the impurity scores of all values. Root node is the feature with the lowest impurity value
+
+2: If the node itself has the lowest impurity score, then there is no point in branching out so it becomes a leaf node.
+
+3: If separating data results in an improvement, then pick the feature with the lowest impurity value.
+
+Feature with the lowest gini impurity score will be assigned as the root node. On the next branch, again, feature with the lowest gini impurity score will be assigned to the internal node.
+
+<strong>Numerical features</strong>
+
+1. Order the feature/column in increasing order and calculate the average value for all adjacent rows/entries.
+
+2. Calculate the impurity values for each average values.
+
+Source:
+- https://www.youtube.com/watch?v=7VeUPuFGJHk&t=2s
+
+<a href="#top">Back to top</a>
+
+## Random Forest
+<strong>Bootstrapping</strong> is any test metric that relies on random sampling with replacement.
+1. Take bootstrapped sample for the data (repetition is possible).
+2. Take only a subset of the bootstrapped sample columns each step to create decision trees.
+3. Repeat steps 1 & 2 'n' times.
+4. Run test samples on the newly built n trees and pick the answer with the most votes.
+
+Usually 1/3 of the dataset will be left out and will be used as the 'out-of-bag' dataset that will be used for testing.
+
+<strong>Out-of-bag error</strong> is the proportion of out-of-bag samples that were incorrectly classified. Typically use sqrt(number of features) to tune for the number of sample features to be picked each step and try few settings above and below.
+
+<strong>Bagging</strong>: bootstrapping data + using the aggregate to make decision. Used to reduce variance'
+
+We can use out-of-bag error to adjust the size of the subset we take from the bootstrapped sample.
+
+Source:
+- https://en.wikipedia.org/wiki/Bootstrapping_(statistics)
+- https://www.youtube.com/watch?v=J4Wdy0Wc_xQ
+- https://www.youtube.com/watch?v=nyxTdL_4Q-Q
+
+<a href="#top">Back to top</a>
+
+## AdaBoost
+In contrast to Random Forest, AdaBoost has a set amount of depth, that is, just a node with 2 leaves. Whereas in RF, each trees are independent of the other, an error from the first tree will affect the following trees. Moreover, in RF the trees' final classification have same equal weights, but in AdaBoost, stumps have varying weights (stump with higher error will have higher weights).
+
+<strong>Stumps</strong> are trees with 1 node and 2 leaves. They are <strong>weak learners</strong> because it only uses one feature.
+
+3 ideas behind AdaBoost:
+1. AdaBoost combines a lot of weak learners to classify.
+2. Some stumps weigh more than others.
+3. Each stump is made by taking previous stump's error into account.
+
+For the first stump, each sample's weights are equal. Ada Boost works by putting more weights on stumps that higher errors and less weights on those that had less errors.
+
+<strong>Total Error of the stump</strong> is the sum of the weights associated with incorrectly classified samples.
+
+Source:
+- https://www.youtube.com/watch?v=LsK-xG1cLYA&t=749s
+
+<a href="#top">Back to top</a>
+
 ## Bagging
-One of the Ensemble methods used to address overfitting, also called 'Bootstrap Aggregating', to reduce variance.
+We use bagging to address overfitting, which reduces variance of the meta learning algorithm. 
+
+Bagging is when sampling is performed with replacement. If sampling is performed without replacement, it is called <strong>pasting</strong>. Bagging is famous for its boost in performance and also because individual learners can be trained in parallel and scale well.
+
+<a href="#top">Back to top</a>
+
+## Voting
+<strong>Hard Voting</strong> is where a model is selected from an ensemble to make the final prediction by simple majority vote for accuracy.
+
+<strong>Soft Voting</strong> can only be done when all the classifiers can calculate probabilities of the outcomes. Soft Voting is at its best when we average all the probabilities.
+
+Source:
+- https://towardsdatascience.com/ensemble-learning-in-machine-learning-getting-started-4ed85eb38e00
+
+<a href="#top">Back to top</a>
+
+## Stacking
+The idea of stacking is to learn several different weak learners and combine them by training meta-model to output predictions based on multiple predictions returned by these weak models.
+
+Steps: 
+1. Split data into two folds.
+2. Choose weak learners and fit them to the data from the first fold.
+3. For each of the weak learners, make prediction for observations in the second fold.
+4. Fit meta-model on the second fold, using predictions made by the weak learners as inputs.
+
+Source:
+- https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205
 
 <a href="#top">Back to top</a>
 
@@ -131,7 +224,11 @@ Most ensemble methods use a single base learning algorithm to produce homogeneou
 
 There also exists heterogeneous ensembles/learners: base learners have to be as accurate as possible and diverse as possible.
 
+<strong>Further resources on implementing Ensemble Learning:</strong> https://towardsdatascience.com/ensemble-learning-in-machine-learning-getting-started-4ed85eb38e00
+<strong>Further resources on Ensemble Learning</strong>:https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205
+
 Source:
 - https://github.com/ShuaiW/data-science-question-answer/
 
 <a href="#top">Back to top</a>
+
